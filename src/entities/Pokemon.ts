@@ -27,6 +27,8 @@ export default class Pokemon {
   @Column()
   description: string;
 
+  @Column('boolean', {default: false})
+  inMyPokemons: boolean;
 
   @ManyToOne(() => User, (user) => user.pokemon)
   user: User;

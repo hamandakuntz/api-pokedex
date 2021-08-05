@@ -2,6 +2,8 @@ import "./setup";
 import axios from "axios";
 import { getRepository } from "typeorm";
 import Pokemon from "./entities/Pokemon";
+import { errorHandler } from "./middlewares/errorHandler";
+import { authMiddleware } from "./middlewares/authMiddleware";
 
 import express from "express";
 import cors from "cors";
@@ -10,14 +12,18 @@ import "reflect-metadata";
 import connectDatabase from "./database";
 
 import * as userController from "./controllers/userController";
-import { authMiddleware } from "./middlewares/authMiddleware";
+import * as pokemonController from "./controllers/pokemonController";
+
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(errorHandler);
 
 app.post("/sign-up", userController.signUp);
 app.post("/sign-in", userController.signIn);
+app.get("/pokemons", authMiddleware, pokemonController.getPokemon);
+
 
 app.use("/populate", async (req,res)=>{
  
@@ -31,7 +37,7 @@ app.use("/populate", async (req,res)=>{
       weight: result.data.weight,
       height: result.data.height,
       baseExp: result.data.base_experience,
-      description: ""
+      description: "",
     }
  
     const speciesResult = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${i}`)
@@ -43,7 +49,6 @@ app.use("/populate", async (req,res)=>{
 })
 
 
-// app.get("/pokemons", authMiddleware, userController.getUsers);
 
 // app.post("/my-pokemons/:id/add", authMiddleware, userController.getUsers);
 
@@ -53,5 +58,6 @@ app.use("/populate", async (req,res)=>{
 export async function init () {
   await connectDatabase();
 }
+
 
 export default app;
