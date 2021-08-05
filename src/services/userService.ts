@@ -2,6 +2,7 @@ import { getRepository } from "typeorm";
 import bcrypt from "bcrypt";
 import User from "../entities/User";
 import Session from "../entities/Session";
+import { v4 as uuidv4 } from 'uuid';
 
 interface validateParams {
   email: string;
@@ -33,4 +34,24 @@ export async function createUser(params: validateParams) {
     const hashedPassword = bcrypt.hashSync(params.password, 10);
     const email = params.email;    
     await repository.insert({ email, password: hashedPassword}) 
+}
+
+
+export async function signIn(email: string, password: string): Promise<string> {
+  const userRepository = getRepository(User);
+  const sessionRepository = getRepository(Session);
+
+  const user = await userRepository.findOne({ email });
+
+  if(!user) {
+    return null;
+  }
+
+  if(bcrypt.compareSync(password, user.password)) {
+    const token = uuidv4();
+    await sessionRepository.insert({ userId: user.id, token})
+    return token;
+  } else {
+    return null;
+  }
 }

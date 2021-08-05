@@ -17,6 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/sign-up", userController.signUp);
+app.post("/sign-in", userController.signIn);
 
 app.use("/populate", async (req,res)=>{
  
@@ -41,7 +42,6 @@ app.use("/populate", async (req,res)=>{
   res.send("OK")
 })
 
-// app.post("/sign-in", userController.signIn);
 
 // app.get("/pokemons", authMiddleware, userController.getUsers);
 
