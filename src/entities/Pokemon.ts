@@ -7,9 +7,6 @@ export default class Pokemon {
   id: number;
 
   @Column()
-  userId: number;
-
-  @Column()
   name: string;
 
   @Column()
@@ -19,19 +16,17 @@ export default class Pokemon {
   image: string;
 
   @Column()
-  weight: string;
+  weight: number;
 
   @Column()
-  height: string;
+  height: number;
 
   @Column()
-  baseExp: string;
+  baseExp: number;
 
   @Column()
   description: string;
 
-  @Column()
-  inMyPokemons: boolean;
 
   @ManyToOne(() => User, (user) => user.pokemon)
   user: User;

@@ -9,26 +9,16 @@ interface validateParams {
   confirmPassword: string;
 }
 
+export async function validateSession(token: string) {
+  const sessionRepository = getRepository(Session);
+  const session = await sessionRepository.findOne({ where: { token }, relations: ["user"]});
 
-// export async function signUp(params: validateParams) {
-//   const repository = getRepository(User);
-//   const hashedPassword = bcrypt.hashSync(params.password, 10);
-//   const email = params.email;
-  
-//   await repository.insert({ email, password: hashedPassword}) 
-// }
-
-
-// export async function validateSession(token: string) {
-//   const sessionRepository = getRepository(Session);
-//   const session = await sessionRepository.findOne({ where: { token }, relations: ["user"]});
-
-//   if(!session) {
-//     return null;
-//   } else {
-//     return session.user;
-//   }
-// }
+  if(!session) {
+    return null;
+  } else {
+    return session.user;
+  }
+}
 
 
 export async function getUserByEmail(email: string) {

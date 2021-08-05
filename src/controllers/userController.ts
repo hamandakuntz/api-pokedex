@@ -5,9 +5,6 @@ import * as userService from "../services/userService";
 
 
 export async function signUp (req: Request, res: Response) {
-  // const { email, password, confirmPassword} = req.body as { email: string; password: string; confirmPassword: string};
-  // const params = { email, password, confirmPassword};
-
   const { error } = schemaValidateSignUp.validate(req.body);
   if (error) return res.sendStatus(400);
   console.log(error);
