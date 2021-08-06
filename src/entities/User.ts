@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import Pokemon from "./Pokemon";
+import userPokemons from "./UserPokemons";
 
 @Entity("users")
 export default class User {
@@ -12,6 +13,6 @@ export default class User {
   @Column()
   password: string;
 
-  @OneToMany(() => Pokemon, (pokemon) => pokemon.user)
-  pokemon: Pokemon[];
+  @OneToMany(() => userPokemons, (userPokemons) => userPokemons.user)
+  pokemonsUser: userPokemons[];
 }
