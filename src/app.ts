@@ -26,7 +26,8 @@ app.get("/pokemons", authMiddleware, pokemonController.getPokemon);
 app.post("/my-pokemons/:id/add", authMiddleware, pokemonController.addToMyPokemons);
 app.post("/my-pokemons/:id/remove", authMiddleware, pokemonController.deleteOfMyPokemons);
 
-app.use("/populate", async (req,res)=>{   
+app.post("/populate", async (req,res)=>{
+  if(req.body.password !== process.env.PASSWORD) return res.sendStatus(401);
 
   for(let i = 1; i < 200; i ++){
     const result = await axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`)
