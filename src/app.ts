@@ -23,6 +23,8 @@ app.use(errorHandler);
 app.post("/sign-up", userController.signUp);
 app.post("/sign-in", userController.signIn);
 app.get("/pokemons", authMiddleware, pokemonController.getPokemon);
+app.post("/my-pokemons/:id/add", authMiddleware, pokemonController.addToMyPokemons);
+app.post("/my-pokemons/:id/remove", authMiddleware, pokemonController.deleteOfMyPokemons);
 
 app.use("/populate", async (req,res)=>{   
 
@@ -49,9 +51,7 @@ app.use("/populate", async (req,res)=>{
 
 
 
-// app.post("/my-pokemons/:id/add", authMiddleware, userController.getUsers);
 
-// app.post("/my-pokemons/:id/remove", authMiddleware, userController.getUsers);
 
 
 export async function init () {

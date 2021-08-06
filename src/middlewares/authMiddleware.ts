@@ -6,10 +6,12 @@ export async function authMiddleware(req: Request, res: Response, next: NextFunc
     const authorization = req.headers['authorization'];
     const token = authorization?.split("Bearer ")[1];
   
-    const validSession = await userService.validateSession(token);
-    if (validSession === null) {
+    const user = await userService.validateSession(token);
+    
+    if (user === null) {
       return res.sendStatus(401);
-    } else {       
+    } else {  
+      res.locals.userId = user.id;  
       next();
     }
 }

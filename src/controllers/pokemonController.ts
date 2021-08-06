@@ -11,3 +11,19 @@ export async function getPokemon (req: Request, res: Response) {
     res.sendStatus(500);
   }
 }
+
+export async function addToMyPokemons (req: Request, res: Response) {
+  const userId  = res.locals.userId;
+  const pokemonId = req.params.id;
+
+  const status = await pokemonsService.addToMyPokemons(userId, Number(pokemonId));
+  res.sendStatus(status);
+}
+
+export async function deleteOfMyPokemons(req: Request, res: Response) {
+  const userId  = res.locals.userId;
+  const pokemonId = req.params.id;
+
+  const statusCode = await pokemonsService.deleteOfMyPokemons(userId, Number(pokemonId));
+  res.sendStatus(statusCode);
+}
