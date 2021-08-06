@@ -46,10 +46,8 @@ export async function getAll() {
 export async function createSession(userId: number) {
     const session = {
         userId,
-        token: "1234567890"
+        token: "123456"
     };
-
-    console.log(userId)
 
     await getRepository(Session).save({
         token: session.token,
@@ -63,7 +61,6 @@ export async function getUserToken(userId: number) {
     const sessionRepository = getRepository(Session);
     const session = await sessionRepository.findOne({ where: { userId }, relations: ["user"]});   
     
-    console.log(session.token);
     return session.token;
 }
 
