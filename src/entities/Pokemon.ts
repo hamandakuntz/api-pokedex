@@ -30,6 +30,8 @@ export default class Pokemon {
   @Column('boolean', {default: false})
   inMyPokemons: boolean;
 
-  @ManyToOne(() => User, (user) => user.pokemon)
+  @ManyToOne(() => User, (user) => user.pokemon, {
+    cascade: true
+  })
   user: User;
 }

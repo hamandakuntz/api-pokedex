@@ -12,6 +12,8 @@ export default class Session {
   @Column()
   userId: number;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, {
+    cascade: true
+  })
   user: User;
 }
